@@ -1,5 +1,5 @@
 # Import Packages
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from firebase_admin import credentials, firestore
 import firebase_admin
 import googlemaps
@@ -21,7 +21,7 @@ def index():
     for data in database:
         show[data.id] = data.to_dict()
     
-    return show
+    return jsonify(show)
     
 @app.route("/maps/<id>", methods=["GET"])
 def maps(id):
@@ -36,7 +36,7 @@ def maps(id):
 
 @app.route("/update", methods=["POST"])
 def update():
-    location = request.form["lokasi"]
+    id = request.form["id"]
     status = request.form["status"]
     
     if status.lower() == "true" or status == "1":
@@ -45,13 +45,17 @@ def update():
     elif status.lower() == "false" or status == "0":
         condition = False
         
-    database = db.collection("data_banjir").document(location)
+    database = db.collection("data_banjir").document(id)
     database.update(
     {
         "status": condition
     }
     )
-    return "Sucess"
+    return jsonify(
+    {
+        "Process": "Sucess"
+    }
+    )
 
 # APP Run
 if __name__ == "__main__":
