@@ -8,7 +8,7 @@ import os
 
 # Initialization
 app = Flask(__name__)
-cred = credentials.Certificate("/service_account/firebase_admin") # Use ("/service_account/firebase_admin") for deploying in Cloud Run and call volume from Secret Manager
+cred = credentials.Certificate("service_account/firebase_admin") # Use ("/service_account/firebase_admin") for deploying in Cloud Run and call volume from Secret Manager
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 api_key = os.environ["API_KEY"]
@@ -94,4 +94,4 @@ def update():
 
 # APP Run
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080) # Delete "debug=True" before deploying
+    app.run(host="0.0.0.0", port=8080, debug=True) # Delete "debug=True" before deploying
