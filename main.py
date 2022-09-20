@@ -43,7 +43,7 @@ def maps(id):
     get_data = database.get()
     data = get_data.to_dict()
     
-    return """"
+    return """
     <style>
     table, th, td {
         border: 1px solid black;
@@ -63,8 +63,8 @@ def maps(id):
             <th> Ketinggian Air </th>
         </tr>
         <tr>
-            <td> Ayam bebek </td>
-            <td> Bebek Ayam </td>
+            <td> """ + str(data["name"]) + """ </td>
+            <td> """ + str(data["ketinggian_air"]) + """ meter </td>
         </tr>
     </table>
     """
